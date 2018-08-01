@@ -604,9 +604,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_DDM IS
     BEGIN
         l_sql := 'SELECT '||i_to||'_ATTRIBUTE_VALUE FROM DD_ATTRIBUTE_VALUE_PAIRS WHERE ATTRIBUTE_PAIR_ID = '||i_attribute_pair_id||' AND ';
         IF i_case_sensitive THEN 
-            l_sql := l_sql || '''' || i_value || ''' '; 
+            l_sql := l_sql || ' '||i_from||'_ATTRIBUTE_VALUE '; 
         ELSE
-            l_sql := l_sql || ' UPPER( '|| '''' || i_value || ''') ';
+            l_sql := l_sql || ' UPPER( '||i_from||'_ATTRIBUTE_VALUE )'; 
         END IF;
         IF i_exact THEN 
             l_sql := l_sql || ' = '; 
@@ -614,9 +614,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_DDM IS
             l_sql := l_sql || ' LIKE '; 
         END IF;
         IF i_case_sensitive THEN 
-            l_sql := l_sql || ' '||i_from||'_ATTRIBUTE_VALUE '; 
+            l_sql := l_sql || '''' || i_value || ''' '; 
         ELSE
-            l_sql := l_sql || ' UPPER( '||i_from||'_ATTRIBUTE_VALUE )'; 
+            l_sql := l_sql || ' UPPER( '|| '''' || i_value || ''') ';
         END IF;
 -- dbms_output.put_line(l_sql);
     END;
